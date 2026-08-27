@@ -32,10 +32,12 @@ RICETTE = [
     # ---- sopra la piega ----
     ("hero",          "grigliata-bosco.jpg",   "21-9", 0.50, 0.62),
     ("chill-cover",   "vista-finestra.jpg",    "4-5",  0.50, 0.50),
-    ("sfascio-cover", "concerto.jpg",          "4-5",  0.575, 0.45),
+    ("sfascio-cover", "bar-bottiglie.jpg",     "4-5",  0.50, 0.55),
     # ---- schede destinazione ----
     ("chill-1",       "casa-notte.jpg",        "4-5",  0.50, 0.52),
-    ("sfascio-1",     "bar-bottiglie.jpg",     "4-5",  0.50, 0.55),
+    ("sfascio-1",     "concerto.jpg",          "4-5",  0.575, 0.45),
+    # Quando arriva la foto dello chalet, mettila in originali/chalet-quota.jpg,
+    # riporta qui sopra sfascio-cover su "chalet-quota.jpg" e rilancia lo script.
     # ---- archivio: mare, montagna, estate, inverno ----
     ("arch-1",        "spiaggia-montagna.jpg", "2-1",  0.50, 0.62),
     ("arch-2",        "barca-tramonto.jpg",    "1-1",  0.50, 0.55),
