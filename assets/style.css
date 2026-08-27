@@ -47,8 +47,7 @@ header.site nav a.lnk:hover{color:var(--red)}
 .btn.sm:hover{transform:translate(1px,1px);box-shadow:2px 2px 0 var(--line)}
 
 /* ── segnaposto immagine ── */
-.ph{position:relative;overflow:hidden;background:var(--paper-2);border:2px solid var(--line);
-  background-image:repeating-linear-gradient(45deg,transparent 0 13px,rgba(11,11,11,.05) 13px 26px)}
+.ph{position:relative;overflow:hidden;background:var(--paper-2);border:2px solid var(--line)}
 .ph img{width:100%;height:100%;object-fit:cover;display:block}
 .ph .note{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;
   gap:7px;text-align:center;padding:20px}
@@ -78,13 +77,14 @@ header.site nav a.lnk:hover{color:var(--red)}
 
 /* ── ticker ── */
 .tk{background:var(--ink);color:var(--paper);border-bottom:2px solid var(--line);overflow:hidden;padding:15px 0}
-.tk-in{display:flex;gap:44px;width:max-content;animation:tk 30s linear infinite;will-change:transform}
+.tk-in{display:flex;gap:44px;width:max-content;animation:tk 30s linear infinite}
 .tk span{font-family:Anton,sans-serif;font-size:clamp(19px,2.5vw,28px);letter-spacing:.01em;text-transform:uppercase;white-space:nowrap}
 .tk span.on{color:var(--red)}
 @keyframes tk{to{transform:translateX(-50%)}}
 
 /* ── sezioni ── */
-section.band{padding:96px 0;border-bottom:2px solid var(--line)}
+section.band{padding:96px 0;border-bottom:2px solid var(--line);
+  content-visibility:auto;contain-intrinsic-size:auto 1040px}
 section.band.tight{padding:64px 0}
 h2.sec{font-size:clamp(38px,7vw,92px)}
 h2.sec .o{color:transparent;-webkit-text-stroke:2px var(--ink)}
