@@ -133,6 +133,58 @@
       calc();
     });
 
+    /* ---------- diagnostica: aggiungi ?diag=1 all'indirizzo ----------
+       Gira dentro la pagina vera, senza iframe. Misura due cose:
+       la cadenza a riposo (che dice se il browser e' limitato) e la
+       cadenza durante lo scorrimento (che dice se la pagina e' pesante).
+       Se le due coincidono, il problema non e' la pagina. */
+    if (new URLSearchParams(location.search).get('diag') === '1') {
+      var box = document.createElement('div');
+      box.style.cssText = 'position:fixed;left:12px;bottom:12px;z-index:9999;background:#0d0d0f;color:#eee;' +
+        'font:12px/1.5 ui-monospace,Menlo,monospace;padding:14px 16px;border-radius:8px;white-space:pre;' +
+        'box-shadow:0 10px 40px rgba(0,0,0,.5);max-width:92vw';
+      box.textContent = 'Misura a riposo...';
+      document.body.appendChild(box);
+
+      function campiona(n, muovi, done) {
+        var t = [], last = 0, y = window.scrollY;
+        requestAnimationFrame(function primo(ts) { last = ts; requestAnimationFrame(passo); });
+        function passo(ts) {
+          t.push(ts - last); last = ts;
+          if (muovi) { y += 8; window.scrollTo(0, y); }
+          if (t.length < n) requestAnimationFrame(passo); else done(t.slice(2));
+        }
+      }
+      function stat(a) {
+        var o = a.slice().sort(function (x, y) { return x - y; });
+        return { med: o[o.length >> 1], p95: o[Math.floor(o.length * .95)], max: o[o.length - 1] };
+      }
+      campiona(90, false, function (riposo) {
+        var r = stat(riposo);
+        box.textContent = 'A riposo: ' + r.med.toFixed(1) + ' ms (' + (1000 / r.med).toFixed(0) + ' fps)\nMisura durante lo scorrimento...';
+        window.scrollTo(0, 0);
+        setTimeout(function () {
+          campiona(320, true, function (scorr) {
+            var s2 = stat(scorr);
+            var capped = r.med > 24;
+            var peggiora = s2.med > r.med * 1.35;
+            var esito = capped
+              ? 'Il browser gira a ' + (1000 / r.med).toFixed(0) + ' fps ANCHE FERMO.\nNon e\' la pagina: e\' una limitazione del browser\no dello schermo (risparmio energetico, 30Hz,\nfinestra in secondo piano).'
+              : (peggiora ? 'La pagina rallenta durante lo scorrimento:\nil problema e\' il rendering.' 
+                          : 'Scorrimento fluido: la pagina non e\' il problema.');
+            box.textContent =
+              'A RIPOSO      ' + r.med.toFixed(1) + ' ms  ' + (1000 / r.med).toFixed(0) + ' fps\n' +
+              'SCORRENDO     ' + s2.med.toFixed(1) + ' ms  ' + (1000 / s2.med).toFixed(0) + ' fps\n' +
+              'p95 scorr.    ' + s2.p95.toFixed(1) + ' ms\n' +
+              'peggio        ' + s2.max.toFixed(1) + ' ms\n' +
+              'altezza       ' + document.documentElement.scrollHeight + ' px\n' +
+              'schermo       ' + screen.width + 'x' + screen.height + ' @' + devicePixelRatio + 'x\n\n' + esito;
+            window.scrollTo(0, 0);
+          });
+        }, 260);
+      });
+    }
+
     /* moduli -> WhatsApp */
     var NUMERO = '393000000000';   /* <- sostituire con il numero reale */
     var f1 = document.getElementById('richiesta-form');

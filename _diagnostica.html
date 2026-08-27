@@ -13,7 +13,7 @@ iframe{width:100%;height:420px;border:1px solid #2a2a30;border-radius:8px;margin
 .ok{color:#4fbf95}.bad{color:#ff6b5a}.mid{color:#e8a33d}
 </style></head><body><div class="w">
 <h1>Diagnostica prestazioni</h1>
-<p>Apre il sito qui sotto, lo fa scorrere da solo e misura quanto tempo impiega ogni fotogramma. Serve a capire <em>dove</em> rallenta. Lascia questa scheda in primo piano mentre gira.</p>
+<p><strong>Questa misura passa da un iframe e Safari lo penalizza: usa la misura interna.</strong></p><p>Apri <a style="color:#e63512" href="index.html?diag=1">index.html?diag=1</a>: la diagnostica gira dentro la pagina vera e confronta la cadenza a riposo con quella durante lo scorrimento. Se coincidono, il problema non &egrave; il sito.</p>
 <button id="go">Avvia la misura</button>
 <pre id="out">In attesa.</pre>
 <iframe id="f" src="index.html?smooth=off"></iframe>
