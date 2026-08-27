@@ -41,3 +41,13 @@ Per confrontarlo con lo scorrimento nativo:
 - `assets/app.js` → `var NUMERO` con il numero WhatsApp reale
 - Segnaposto gialli nelle pagine: contatti, tour operator e licenza, P.IVA
 - Fotografie in `assets/img/`, poi togliere il commento agli `<img>`
+
+## Diagnostica prestazioni
+
+`index.html?diag=1` misura la cadenza dei fotogrammi dentro la pagina:
+prima a riposo, poi durante uno scorrimento automatico.
+
+Se le due cadenze coincidono il limite e' del browser o dello schermo,
+non della pagina. Se peggiora solo scorrendo, e' il rendering.
+
+`_diagnostica.html` e' escluso dalla pubblicazione via `.vercelignore`.
