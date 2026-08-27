@@ -53,7 +53,7 @@ header.site nav a.lnk:hover{color:var(--red)}
 .ph .note b{font-family:Anton,sans-serif;font-size:15px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink)}
 .ph .note span{font-size:11.5px;font-weight:600;letter-spacing:.09em;text-transform:uppercase;color:var(--ink-2)}
 .ph.has img+.note{display:none}
-.r-16-9{aspect-ratio:16/9}.r-4-5{aspect-ratio:4/5}.r-1-1{aspect-ratio:1/1}.r-3-2{aspect-ratio:3/2}.r-21-9{aspect-ratio:21/9}
+.r-16-9{aspect-ratio:16/9}.r-2-1{aspect-ratio:2/1}.r-4-5{aspect-ratio:4/5}.r-1-1{aspect-ratio:1/1}.r-3-2{aspect-ratio:3/2}.r-21-9{aspect-ratio:21/9}
 
 /* ── hero ── */
 .hero{border-bottom:2px solid var(--line);padding:56px 0 0}
@@ -83,7 +83,7 @@ header.site nav a.lnk:hover{color:var(--red)}
 
 /* ── sezioni ── */
 section.band{padding:96px 0;border-bottom:2px solid var(--line);
-  content-visibility:auto;contain-intrinsic-size:auto 1040px}
+  content-visibility:auto;contain-intrinsic-size:auto 950px}
 section.band.tight{padding:64px 0}
 h2.sec{font-size:clamp(38px,7vw,92px)}
 h2.sec .o{color:transparent;-webkit-text-stroke:2px var(--ink)}
@@ -122,6 +122,8 @@ h2.sec em{font-style:normal;color:var(--acc)}
 @media(max-width:900px){.split{grid-template-columns:1fr}}
 .split>.ph{border:0;border-right:2px solid var(--line)}
 @media(max-width:900px){.split>.ph{border-right:0;border-bottom:2px solid var(--line)}}
+/* da 901px in su la foto riempie l'altezza della colonna di testo */
+@media(min-width:901px){.split>.ph{aspect-ratio:auto;height:100%}}
 .split .txt{padding:44px 40px}
 @media(max-width:600px){.split .txt{padding:32px 26px}}
 .gg{list-style:none;padding:0;margin:26px 0 0}
@@ -152,6 +154,11 @@ h2.sec em{font-style:normal;color:var(--acc)}
 .gal .ph{border:0}
 .gal .w2{grid-column:span 2}
 @media(max-width:900px){.gal{grid-template-columns:repeat(2,1fr)}.gal .w2{grid-column:span 2}}
+.gal .tile{aspect-ratio:2/1;background:var(--acc);color:var(--on-acc);
+  display:flex;flex-direction:column;justify-content:center;gap:10px;padding:clamp(22px,4vw,44px)}
+.gal .tile b{font-family:Anton,sans-serif;font-weight:400;line-height:.94;text-transform:uppercase;
+  font-size:clamp(26px,3.4vw,50px);letter-spacing:.01em}
+.gal .tile span{font-size:13px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;opacity:.88}
 
 /* ── prima edizione ── */
 .first{background:var(--ink);color:var(--paper);border-bottom:2px solid var(--line)}

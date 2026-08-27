@@ -1,3 +1,9 @@
 .DS_Store
 .vercel
 node_modules
+
+# Le fotografie originali restano solo in locale: contengono i metadati EXIF
+# della fotocamera, coordinate GPS comprese, e il repository e' pubblico.
+# I file pubblicati sono i derivati in assets/img/*.webp, generati da
+# tools/immagini.py, che escono senza alcun metadato.
+assets/img/originali/
