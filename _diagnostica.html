@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="it"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Diagnostica prestazioni — Senzasbatti</title>
+<style>
+body{margin:0;font:15px/1.6 system-ui,sans-serif;background:#0d0d0f;color:#eee}
+.w{max-width:760px;margin:0 auto;padding:30px 22px}
+h1{font-size:22px;margin:0 0 6px}p{color:#a8a8b0;margin:8px 0}
+button{background:#e63512;color:#fff;border:0;padding:14px 26px;font:600 15px system-ui;cursor:pointer;border-radius:8px;margin:16px 0}
+button:disabled{opacity:.5;cursor:wait}
+pre{background:#16161a;border:1px solid #2a2a30;border-radius:8px;padding:16px;white-space:pre-wrap;font-size:13px;overflow-x:auto}
+iframe{width:100%;height:420px;border:1px solid #2a2a30;border-radius:8px;margin-top:16px;background:#fff}
+.ok{color:#4fbf95}.bad{color:#ff6b5a}.mid{color:#e8a33d}
+</style></head><body><div class="w">
+<h1>Diagnostica prestazioni</h1>
+<p>Apre il sito qui sotto, lo fa scorrere da solo e misura quanto tempo impiega ogni fotogramma. Serve a capire <em>dove</em> rallenta. Lascia questa scheda in primo piano mentre gira.</p>
+<button id="go">Avvia la misura</button>
+<pre id="out">In attesa.</pre>
+<iframe id="f" src="index.html?smooth=off"></iframe>
+</div>
+<script>
+var out=document.getElementById('out'), go=document.getElementById('go'), f=document.getElementById('f');
+function riga(k,v,cls){return k.padEnd(34,' ')+(cls?'<'+cls+'>':'')+v+(cls?'</'+cls+'>':'');}
+go.onclick=function(){
+  go.disabled=true; out.textContent='Misura in corso, circa 8 secondi...';
+  var w=f.contentWindow, d=f.contentDocument;
+  var frames=[], last=performance.now(), y=0, maxY=d.documentElement.scrollHeight-w.innerHeight;
+  var passo=Math.max(6,Math.round(maxY/420));
+  function tick(ts){
+    var dt=ts-last; last=ts; frames.push(dt);
+    y+=passo; w.scrollTo(0,y);
+    if(y<maxY && frames.length<600) requestAnimationFrame(tick);
+    else fine();
+  }
+  function fine(){
+    frames=frames.slice(2);
+    var ord=frames.slice().sort(function(a,b){return a-b;});
+    var med=ord[Math.floor(ord.length/2)];
+    var p95=ord[Math.floor(ord.length*0.95)];
+    var peggio=ord[ord.length-1];
+    var persi=frames.filter(function(x){return x>25;}).length;
+    var fps=1000/med;
+    var giudizio = fps>55 && persi/frames.length<0.05 ? ['FLUIDO','ok']
+                 : fps>40 ? ['ACCETTABILE','mid'] : ['SCATTOSO','bad'];
+    out.innerHTML=[
+      riga('Fotogrammi misurati', frames.length),
+      riga('Tempo mediano per fotogramma', med.toFixed(1)+' ms'),
+      riga('95esimo percentile', p95.toFixed(1)+' ms'),
+      riga('Fotogramma peggiore', peggio.toFixed(1)+' ms'),
+      riga('Fotogrammi sopra 25 ms', persi+' su '+frames.length+' ('+Math.round(persi/frames.length*100)+'%)'),
+      riga('FPS stimati', fps.toFixed(0)),
+      '',
+      riga('ESITO', giudizio[0], giudizio[1]),
+      '',
+      'Altezza pagina: '+d.documentElement.scrollHeight+' px',
+      'Schermo: '+screen.width+'x'+screen.height+' @'+devicePixelRatio+'x',
+      'Browser: '+navigator.userAgent.slice(0,90)
+    ].join('\n');
+    go.disabled=false; w.scrollTo(0,0);
+  }
+  requestAnimationFrame(function(ts){last=ts;requestAnimationFrame(tick);});
+};
+</script></body></html>

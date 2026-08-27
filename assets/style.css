@@ -13,7 +13,7 @@
 html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
 body{margin:0;background:var(--paper);color:var(--ink);
   font-family:Epilogue,"Helvetica Neue",Arial,sans-serif;font-size:17px;line-height:1.55;
-  -webkit-font-smoothing:antialiased;overflow-x:hidden}
+  -webkit-font-smoothing:antialiased}
 h1,h2,h3,.dsp{font-family:Anton,Impact,"Arial Narrow",sans-serif;font-weight:400;text-transform:uppercase;
   letter-spacing:-.012em;line-height:.92;margin:0;text-wrap:balance}
 p{margin:14px 0;max-width:60ch}
@@ -22,8 +22,7 @@ img{max-width:100%;display:block}
 .wrap{max-width:var(--maxw);margin:0 auto;padding:0 26px}
 
 /* ── header ── */
-header.site{position:sticky;top:0;z-index:80;background:var(--paper);border-bottom:2px solid var(--line);
-  will-change:transform;transform:translateZ(0)}
+header.site{position:sticky;top:0;z-index:80;background:var(--paper);border-bottom:2px solid var(--line)}
 header.site .wrap{display:flex;align-items:center;justify-content:space-between;height:66px}
 .logo{font-family:Anton,sans-serif;font-size:24px;letter-spacing:-.025em;text-transform:uppercase;white-space:nowrap}
 @media(max-width:420px){.logo{font-size:20px}}
